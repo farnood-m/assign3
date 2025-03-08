@@ -1,61 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Attempt Quiz - LMS</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
     <header>
-        <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
-        <h1>LMS - Learning Management System</h1>
+      <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px" />
+      <h1>LMS - Learning Management System</h1>
     </header>
     <div>
-        <nav>
-            <a href="index.html">Homepage</a>
-            <a href="course_view.html">Courses</a> 
-        </nav>
+      <nav>
+        <a href="index.html">Homepage</a>
+        <a href="course_view.html">Courses</a>
+      </nav>
     </div>
     <main class="attemptquiz">
-        <img src="banner.jpg" alt="Quiz Banner" style="width: 100%;">
-        <div class="quizdetails">
-            <h2>Course Name: Web Development</h2>
-            <h2>Course Code: WD381</h2>
-            <p>Topic: HTML Basics</p>
-            <p>Deadline: 11:59 PM, February 10, 2025</p>
-            <p>Attempts Allowed: 1</p>
-        </div>
-        
-        <h3>Question 1</h3>
-        <p>What does HTML stand for?</p>
-        <div class="Qs">
-            <input type="radio" id="q1a" name="q1" value="Hyper Text Markup Language">
-            <label for="q1a">Hyper Text Markup Language</label><br>
-            <input type="radio" id="q1b" name="q1" value="Home Tool Markup Language">
-            <label for="q1b">Home Tool Markup Language</label><br>
-        </div>
-        <br>
-        <button class="ans">Submit Answer</button>
-        
-        <h3>Question 2</h3>
-        <p>Which of the following are HTML elements? (Select all that apply)</p>
-        <div class="Qs">
-        <input type="checkbox" id="q2a" name="q2" value="<div>">
-        <label for="q2a">&lt;div&gt;</label><br>
-        <input type="checkbox" id="q2b" name="q2" value="<span>">
-        <label for="q2b">&lt;span&gt;</label><br>
-        </div>
-        <br>
-        <button class="ans">Submit Answer</button>
-        
-        <br><br>
-        <a href="leaderboard.html">
-            <button class="FinQz">Finish Quiz</button>
-        </a>
+      <img src="banner.jpg" alt="Quiz Banner" style="width: 100%" />
+      <div class="quizdetails">
+        <h2>Course Name: Web Development</h2>
+        <h2>Course Code: WD381</h2>
+        <p>Topic: HTML Basics</p>
+        <p>Deadline: 11:59 PM, February 10, 2025</p>
+        <p>Attempts Allowed: 1</p>
+      </div>
+
+      <h3>Question 1</h3>
+      <p>What does HTML stand for?</p>
+      <div class="Qs">
+        <input
+          type="radio"
+          id="q1a"
+          name="q1"
+          value="Hyper Text Markup Language"
+        />
+        <label for="q1a">Hyper Text Markup Language</label><br />
+        <input
+          type="radio"
+          id="q1b"
+          name="q1"
+          value="Home Tool Markup Language"
+        />
+        <label for="q1b">Home Tool Markup Language</label><br />
+      </div>
+      <br />
+      <button class="ans">Submit Answer</button>
+
+      <h3>Question 2</h3>
+      <p>Which of the following are HTML elements? (Select all that apply)</p>
+      <div class="Qs">
+        <input type="checkbox" id="q2a" name="q2" value="<div>" />
+        <label for="q2a">&lt;div&gt;</label><br />
+        <input type="checkbox" id="q2b" name="q2" value="<span>" />
+        <label for="q2b">&lt;span&gt;</label><br />
+      </div>
+      <br />
+      <button class="ans">Submit Answer</button>
+
+      <br /><br />
+      <p class="grade">Grade: 0 / 100</p>
+      <a href="leaderboard.html">
+        <button class="FinQz">Finish Quiz</button>
+      </a>
+      <div class="timer">Time :</div>
     </main>
     <footer>
-        <p>&copy; 2025 LMS. All rights reserved.</p>
+      <p>&copy; 2025 LMS. All rights reserved.</p>
     </footer>
-</body>
+    <script>
+      const grade = document.querySelector(".grade");
+      let grad = 0;
+      const gradeupdate = (value) => {
+        grad += value;
+        grade.textContent = `Grade: ${grad} / 100`;
+      };
+
+      const timer = document.querySelector(".timer");
+      let second = 60;
+      let min = 9;
+      setInterval(() => {
+        if (second == 0) {
+          min--;
+          second = 60;
+        }
+        second--;
+        timer.textContent = `Time : ${min < 10 ? "0" + min : min}:${second}`;
+
+        if (min == 0 && second == 0) {
+          window.location.href = "leaderboard.html";
+        }
+      }, 1000);
+
+      const ansButtons = document.querySelectorAll(".ans");
+      ansButtons[0].addEventListener("click", () => {
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        if (q1) {
+          if (q1.value === "Hyper Text Markup Language") {
+            gradeupdate(50);
+          }
+          ansButtons[0].disabled = true;
+          document
+            .querySelectorAll('input[name="q1"]')
+            .forEach((input) => (input.disabled = true));
+        } else {
+          alert("Please select an answer");
+        }
+      });
+      ansButtons[1].addEventListener("click", () => {
+        const q2 = document.querySelectorAll('input[name="q2"]:checked');
+        if (q2.length > 0) {
+          if (
+            q2.length === 2 &&
+            q2[0].value === "<div>" &&
+            q2[1].value === "<span>"
+          ) {
+            gradeupdate(50);
+          } else if (
+            q2.length === 1 &&
+            (q2[0].value === "<div>" || q2[0].value === "<span>")
+          ) {
+            gradeupdate(25);
+          }
+          ansButtons[1].disabled = true;
+          document
+            .querySelectorAll('input[name="q2"]')
+            .forEach((input) => (input.disabled = true));
+        } else {
+          alert("Please select an answer");
+        }
+      });
+    </script>
+  </body>
 </html>

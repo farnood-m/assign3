@@ -56,7 +56,16 @@ main[class="index"] {
   margin: 20px auto;
   max-width: 90%;
 }
-
+.timer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  transform: translate(-50%, -50%);
+  background-color: #000000;
+  color: #fff;
+  padding: 0.6rem;
+  border-radius: 10px;
+}
 /* Login Form */
 form {
   display: flex;
