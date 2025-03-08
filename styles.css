@@ -60,11 +60,9 @@ main[class="index"] {
   position: fixed;
   right: 0;
   bottom: 0;
-  transform: translate(-50%, -50%);
   background-color: #000000;
   color: #fff;
   padding: 0.6rem;
-  border-radius: 10px;
 }
 /* Login Form */
 form {
